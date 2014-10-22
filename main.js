@@ -90,7 +90,9 @@
         return playing = true;
       }
     });
-    $("#submit-button").click(sendComment);
+    $("#submit-button").click(function() {
+      return sendComment();
+    });
     $("#text-input").keypress(function(e) {
       if (e.which === 13) {
         sendComment();
@@ -98,8 +100,13 @@
       return true;
     });
     sendComment = function() {
+      var text;
+      text = $("#text-input").val();
+      if (!(text || text.length() === 0)) {
+        return;
+      }
       commentsRef.push({
-        text: $("#text-input").val(),
+        text: text,
         createdAt: Firebase.ServerValue.TIMESTAMP
       });
       $("#text-input").val("");

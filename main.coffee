@@ -84,14 +84,20 @@ $ ->
       setSliderTime Date.now()
       playing = true
 
-  $("#submit-button").click sendComment
+  $("#submit-button").click ->
+    sendComment()
+
   $("#text-input").keypress (e) ->
     sendComment() if e.which is 13
     true
 
   sendComment = ->
+    text = $("#text-input").val()
+
+    return unless text or text.length() == 0
+
     commentsRef.push
-      text: $("#text-input").val()
+      text: text
       createdAt: Firebase.ServerValue.TIMESTAMP
 
     $("#text-input").val ""
